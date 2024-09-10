@@ -1,14 +1,31 @@
-interface HeadingProps {
+import { HTMLAttributes } from "react";
+import { twMerge } from "tailwind-merge";
+
+type HeadingVariantTypeProps = "xs" | "lg";
+
+interface HeadingProps extends HTMLAttributes<HTMLSpanElement> {
   variant: "xs" | "lg";
   title: string;
 }
 
-export const Heading = ({ variant, title }: HeadingProps) => {
+const HeadingVariantsRecord: Record<HeadingVariantTypeProps, string> = {
+  xs: "text-[64px]",
+  lg: "text-[48px]",
+};
+
+export const Heading = ({
+  variant,
+  className,
+  title,
+  ...props
+}: HeadingProps) => {
   return (
     <h1
-      className={`text-black font-bold text-[${
-        variant === "xs" ? "64px" : "48px"
-      }]`}
+      className={twMerge(
+        `text-black font-bold ${HeadingVariantsRecord[variant]}`,
+        className
+      )}
+      {...props}
     >
       {title}
     </h1>
