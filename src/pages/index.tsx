@@ -1,5 +1,5 @@
 import { HeaderItem } from "../components/header-item";
-import { HEADER_ITEMS_MOCK } from "../mocks/header-itens-mock";
+import { HEADER_ITEMS_MOCK } from "../mocks/header-items-mock";
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
       <header className="flex justify-between items-center">
         <h1 className="text-2xl font-bold capitalize">ARQ360</h1>
 
-        <menu className="flex gap-2 items-center justify-center">
+        <menu className="flex gap-4 items-center justify-center">
           {HEADER_ITEMS_MOCK.map((item, i) => {
             return (
               <HeaderItem

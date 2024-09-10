@@ -22,7 +22,7 @@ export const HeaderItem = ({
   return (
     <span
       className={twMerge(
-        `text-xl font-medium ${
+        `text-lg hover:text-black font-medium cursor-pointer ${
           HeaderItemVariantsRecord[
             String(isActive) as HeaderItemVariantTypeProps
           ]
