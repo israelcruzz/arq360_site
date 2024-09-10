@@ -1,14 +1,31 @@
-interface DescriptionProps {
+import { HTMLAttributes } from "react";
+import { twMerge } from "tailwind-merge";
+
+type DescriptionVariantTypeProps = "primary" | "secondary";
+
+interface DescriptionProps extends HTMLAttributes<HTMLSpanElement> {
   text: string;
-  variant: "primary" | "secondary";
+  variant: DescriptionVariantTypeProps;
 }
 
-export const Description = ({ text, variant }: DescriptionProps) => {
+const ButtonVariantsRecord: Record<DescriptionVariantTypeProps, string> = {
+  primary: "text-[#7F7F7F]",
+  secondary: "text-[#FFFFFF]",
+};
+
+export const Description = ({
+  text,
+  variant,
+  className,
+  ...props
+}: DescriptionProps) => {
   return (
     <p
-      className={`font-medium text-lg text-[${
-        variant === "primary" ? "#7F7F7F" : "#FFFFFF"
-      }]`}
+      className={twMerge(
+        `font-medium text-lg ${ButtonVariantsRecord[variant]}`,
+        className
+      )}
+      {...props}
     >
       {text}
     </p>
