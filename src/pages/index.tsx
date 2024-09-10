@@ -31,6 +31,7 @@ function App() {
             return (
               <HeaderItem
                 title={item.title}
+                isActive
                 key={`@header-item-key/${i}_${new Date()}`}
                 onClick={() => scrollToSection(i)}
               />
@@ -139,7 +140,13 @@ function App() {
       Placeat, repellat assumenda architecto deserunt, aliquid, ea quis
       reiciendis iure iste recusandae dolorum ratione in nulla.
       <section ref={(element) => setRef({ index: 0, element })}>
-        section
+        section1
+      </section>
+      <section ref={(element) => setRef({ index: 1, element })}>
+        section2
+      </section>
+      <section ref={(element) => setRef({ index: 2, element })}>
+        section3
       </section>
     </main>
   );

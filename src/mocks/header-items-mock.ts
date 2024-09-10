@@ -7,9 +7,9 @@ export const HEADER_ITEMS_MOCK: HeaderItemsMockProps[] = [
         title: 'Home'
     }, 
     { 
-        title: 'Sobre' 
+        title: 'Sobre'
     },
     { 
-        title: 'FAQ' 
+        title: 'FAQ'
     }
 ]
