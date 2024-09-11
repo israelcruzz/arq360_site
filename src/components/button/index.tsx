@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 type ButtonVariantTypeProps = "primary" | "secondary";
 
 interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   variant: ButtonVariantTypeProps;
 }
 
