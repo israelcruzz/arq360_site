@@ -1,17 +1,39 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../components/button";
 import { HeaderItem } from "../components/header-item";
 import { HEADER_ITEMS_MOCK } from "../mocks/header-items-mock";
 import { Heading } from "../components/heading";
 import { Description } from "../components/description";
-import { CirclePlay } from "lucide-react";
+import { CirclePlay, Target, X } from "lucide-react";
 import thumbImage from "../assets/images/thumb-phones.png";
-import { Player } from 'video-react';
+import { createPortal } from "react-dom";
 
 interface SetRef {
   index: number;
   element: HTMLElement | null;
 }
+
+interface ModalProps {
+  handleClick: () => void;
+}
+
+export const Modal = ({ handleClick }: ModalProps) => {
+  return (
+    <div className="modal-video fixed w-full h-full bg-black/60 inset-0 flex flex-col justify-center items-center">
+      <div>
+        <button onClick={handleClick}>
+          <X color="#FFFFFF" />
+        </button>
+        <video width="800" height="800" controls>
+          <source
+            type="video/mp4"
+            src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
+          />
+        </video>
+      </div>
+    </div>
+  );
+};
 
 function App() {
   const [modalVideo, setModalVideo] = useState<boolean>(false);
@@ -29,11 +51,17 @@ function App() {
 
   const handleActiveModal = () => {
     setModalVideo(true);
-  }
+  };
 
   const handleDesactiveModal = () => {
     setModalVideo(false);
-  }
+  };
+
+  useEffect(() => {
+    window.document.body.addEventListener("click", (event) => {
+      console.log(event.target);
+    });
+  }, []);
 
   return (
     <div className="relative">
@@ -64,7 +92,10 @@ function App() {
           className="flex"
         >
           <div className="flex flex-col justify-center gap-5">
-            <Heading title="Novas experiências, facilidade Extra!" variant="lg" />
+            <Heading
+              title="Novas experiências, facilidade Extra!"
+              variant="lg"
+            />
             <Description
               text="Cum et convallis risus placerat aliquam, nunc. Scelerisque aliquet faucibus tincidunt eu adipiscing sociis arcu lorem porttitor."
               variant="primary"
@@ -74,7 +105,10 @@ function App() {
                 <span>Comece Agora</span>
               </Button>
 
-              <button className="flex gap-3 items-center hover:text-underline" onClick={handleActiveModal}>
+              <button
+                className="flex gap-3 items-center hover:underline"
+                onClick={handleActiveModal}
+              >
                 <CirclePlay />
                 <span className="font-medium text-lg text-black">
                   Assistir ao Vídeo
@@ -83,7 +117,10 @@ function App() {
             </div>
           </div>
           <div>
-            <img src={thumbImage} className="w-[680px] h-[540px] object-cover" />
+            <img
+              src={thumbImage}
+              className="w-[680px] h-[540px] object-cover"
+            />
           </div>
         </section>
         <section ref={(element) => setRef({ index: 1, element })}>
@@ -94,18 +131,11 @@ function App() {
         </section>
       </main>
 
-      {
-        modalVideo && (
-          <div className="fixed w-full h-full bg-black/60 inset-0 flex flex-col justify-center items-center">
-            <div>
-              <button onClick={handleDesactiveModal}>Fechar</button>
-              <video width="800" height="800" controls>
-                <source type="video/mp4" src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" />
-              </video>
-            </div>
-          </div>
-        )
-      }
+      {modalVideo &&
+        createPortal(
+          Modal({ handleClick: handleDesactiveModal }),
+          document.body
+        )}
     </div>
   );
 }
