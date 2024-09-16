@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "../components/button";
 import { HeaderItem } from "../components/header-item";
 import { HEADER_ITEMS_MOCK } from "../mocks/header-items-mock";
 import { Heading } from "../components/heading";
 import { Description } from "../components/description";
-import { CirclePlay, Target, X } from "lucide-react";
+import { CirclePlay, X } from "lucide-react";
 import thumbImage from "../assets/images/thumb-phones.png";
 import { createPortal } from "react-dom";
 
@@ -13,31 +13,10 @@ interface SetRef {
   element: HTMLElement | null;
 }
 
-interface ModalProps {
-  handleClick: () => void;
-}
-
-export const Modal = ({ handleClick }: ModalProps) => {
-  return (
-    <div className="modal-video fixed w-full h-full bg-black/60 inset-0 flex flex-col justify-center items-center">
-      <div>
-        <button onClick={handleClick}>
-          <X color="#FFFFFF" />
-        </button>
-        <video width="800" height="800" controls>
-          <source
-            type="video/mp4"
-            src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
-          />
-        </video>
-      </div>
-    </div>
-  );
-};
-
 function App() {
   const [modalVideo, setModalVideo] = useState<boolean>(false);
   const sectionsRefs = useRef<HTMLElement[]>([]);
+  const modalVideoRef = useRef(null);
 
   const setRef = ({ index, element }: SetRef) => {
     if (element !== null) {
@@ -57,11 +36,23 @@ function App() {
     setModalVideo(false);
   };
 
-  useEffect(() => {
-    window.document.body.addEventListener("click", (event) => {
-      console.log(event.target);
-    });
-  }, []);
+  const Modal = () => {
+    return (
+      <div ref={modalVideoRef} className="modal-video fixed w-full h-full bg-black/60 inset-0 flex flex-col justify-center items-center">
+        <div>
+          <button onClick={handleDesactiveModal}>
+            <X color="#FFFFFF" />
+          </button>
+          <video width="800" height="800" controls>
+            <source
+              type="video/mp4"
+              src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
+            />
+          </video>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="relative">
@@ -133,7 +124,7 @@ function App() {
 
       {modalVideo &&
         createPortal(
-          Modal({ handleClick: handleDesactiveModal }),
+          Modal(),
           document.body
         )}
     </div>
