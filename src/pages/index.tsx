@@ -5,8 +5,9 @@ import { HEADER_ITEMS_MOCK } from "../mocks/header-items-mock";
 import { Heading } from "../components/heading";
 import { Description } from "../components/description";
 import { CirclePlay, X } from "lucide-react";
-import thumbImage from "../assets/images/thumb-phones.png";
 import { createPortal } from "react-dom";
+import thumbImage from "../assets/images/thumb-phones.png";
+import homeScreenImage from "../assets/images/phone-one.png";
 
 interface SetRef {
   index: number;
@@ -61,8 +62,8 @@ function App() {
         ref={modalVideoRef}
         className="modal-video fixed w-full h-full bg-black/60 inset-0 flex flex-col justify-center items-center"
       >
-        <div>
-          <button onClick={handleDesactiveModal}>
+        <div className="flex justify-between flex-col">
+          <button onClick={handleDesactiveModal} className="self-end">
             <X color="#FFFFFF" />
           </button>
           <video width="800" height="800" className="video-modal" controls>
@@ -102,7 +103,7 @@ function App() {
 
         <section
           ref={(element) => setRef({ index: 0, element })}
-          className="flex"
+          className="flex flex-col md:flex-row"
         >
           <div className="flex flex-col justify-center gap-5">
             <Heading
@@ -136,8 +137,96 @@ function App() {
             />
           </div>
         </section>
-        <section ref={(element) => setRef({ index: 1, element })}>
-          section2
+        <section
+          ref={(element) => setRef({ index: 1, element })}
+          className="flex-col gap-6"
+        >
+          <section className="grid grid-cols-1 md:grid-cols-2 items-center">
+            <img src={homeScreenImage} alt="" />
+
+            <div className="flex flex-col gap-6">
+              <h1 className="font-bold text-4xl">
+                Transforme seus Projetos em Experiências Imersivas
+              </h1>
+              <p className="text-[#7F7F7F] text-base font-medium">
+                O ARQ360 foi projetado para simplificar o processo de
+                apresentação de projetos de arquitetura. Com nossa tecnologia de
+                visualização em 360 graus, os clientes podem caminhar
+                virtualmente pelos ambientes, entendendo melhor a visão do
+                arquiteto e tomando decisões com mais confiança.
+              </p>
+
+              <div>
+                <p className="font-bold text-base">
+                  &bull; Fácil armazenamento de projetos
+                </p>
+                <p className="font-bold text-base">
+                  &bull; Visualização interativa em 360 graus
+                </p>
+                <p className="font-bold text-base">
+                  &bull; Integração com dispositivos de realidade virtual
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className="grid grid-cols-1 md:grid-cols-2 items-center">
+            <div className="flex flex-col gap-6">
+              <h1 className="font-bold text-4xl">
+                Transforme seus Projetos em Experiências Imersivas
+              </h1>
+              <p className="text-[#7F7F7F] text-base font-medium">
+                O ARQ360 foi projetado para simplificar o processo de
+                apresentação de projetos de arquitetura. Com nossa tecnologia de
+                visualização em 360 graus, os clientes podem caminhar
+                virtualmente pelos ambientes, entendendo melhor a visão do
+                arquiteto e tomando decisões com mais confiança.
+              </p>
+
+              <div>
+                <p className="font-bold text-base">
+                  &bull; Fácil armazenamento de projetos
+                </p>
+                <p className="font-bold text-base">
+                  &bull; Visualização interativa em 360 graus
+                </p>
+                <p className="font-bold text-base">
+                  &bull; Integração com dispositivos de realidade virtual
+                </p>
+              </div>
+            </div>
+
+            <img src={homeScreenImage} alt="" />
+          </section>
+
+          <section className="grid grid-cols-1 md:grid-cols-2 items-center">
+            <img src={homeScreenImage} alt="" />
+
+            <div className="flex flex-col gap-6">
+              <h1 className="font-bold text-4xl">
+                Transforme seus Projetos em Experiências Imersivas
+              </h1>
+              <p className="text-[#7F7F7F] text-base font-medium">
+                O ARQ360 foi projetado para simplificar o processo de
+                apresentação de projetos de arquitetura. Com nossa tecnologia de
+                visualização em 360 graus, os clientes podem caminhar
+                virtualmente pelos ambientes, entendendo melhor a visão do
+                arquiteto e tomando decisões com mais confiança.
+              </p>
+
+              <div>
+                <p className="font-bold text-base">
+                  &bull; Fácil armazenamento de projetos
+                </p>
+                <p className="font-bold text-base">
+                  &bull; Visualização interativa em 360 graus
+                </p>
+                <p className="font-bold text-base">
+                  &bull; Integração com dispositivos de realidade virtual
+                </p>
+              </div>
+            </div>
+          </section>
         </section>
         <section ref={(element) => setRef({ index: 2, element })}>
           section3
