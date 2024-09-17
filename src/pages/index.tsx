@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../components/button";
 import { HeaderItem } from "../components/header-item";
 import { HEADER_ITEMS_MOCK } from "../mocks/header-items-mock";
@@ -16,7 +16,7 @@ interface SetRef {
 function App() {
   const [modalVideo, setModalVideo] = useState<boolean>(false);
   const sectionsRefs = useRef<HTMLElement[]>([]);
-  const modalVideoRef = useRef(null);
+  const modalVideoRef = useRef<HTMLElement | null>(null);
 
   const setRef = ({ index, element }: SetRef) => {
     if (element !== null) {
@@ -36,14 +36,36 @@ function App() {
     setModalVideo(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const { target } = event;
+      console.log(target);
+
+      if (modalVideoRef.current?.contains(target as Node)) {
+        if (target.className !== "video-modal") {
+          setModalVideo(false);
+        }
+      }
+    };
+
+    if (modalVideo && modalVideoRef.current) {
+      document.addEventListener("click", handleClickOutside);
+    }
+
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [modalVideo]);
+
   const Modal = () => {
     return (
-      <div ref={modalVideoRef} className="modal-video fixed w-full h-full bg-black/60 inset-0 flex flex-col justify-center items-center">
+      <div
+        ref={modalVideoRef}
+        className="modal-video fixed w-full h-full bg-black/60 inset-0 flex flex-col justify-center items-center"
+      >
         <div>
           <button onClick={handleDesactiveModal}>
             <X color="#FFFFFF" />
           </button>
-          <video width="800" height="800" controls>
+          <video width="800" height="800" className="video-modal" controls>
             <source
               type="video/mp4"
               src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
@@ -122,11 +144,7 @@ function App() {
         </section>
       </main>
 
-      {modalVideo &&
-        createPortal(
-          Modal(),
-          document.body
-        )}
+      {modalVideo && createPortal(Modal(), document.body)}
     </div>
   );
 }
